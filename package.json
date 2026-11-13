@@ -1,0 +1,24 @@
+{
+  "name": "deepshield",
+  "version": "1.0.0",
+  "description": "DeepShield - AI Deepfake & Synthetic Media Detection System",
+  "scripts": {
+    "dev:server": "cd server && npm run dev",
+    "dev:client": "cd client && npm run dev",
+    "dev:python": "cd python-service && .venv\\Scripts\\python.exe -m uvicorn app.main:app --port 8000 --reload",
+    "build:client": "cd client && npm run build",
+    "start": "cd server && npm start"
+  },
+  "keywords": [
+    "deepfake-detection",
+    "ai-detection",
+    "gemini-api",
+    "huggingface",
+    "mern",
+    "forensics",
+    "ela"
+  ],
+  "author": "DeepShield Team",
+  "license": "MIT"
+}
+
