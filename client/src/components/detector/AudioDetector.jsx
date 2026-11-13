@@ -16,14 +16,12 @@ import confetti from 'canvas-confetti';
 export function AudioDetector() {
   const [file, setFile] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [progress, setProgress] = useState(0);
   const [error, setError] = useState(null);
   const [report, setReport] = useState(null);
 
   const handleFileSelect = (selectedFile) => {
     setFile(selectedFile);
     setError(null);
-    setReport(null);
   };
 
   const handleClear = () => {
@@ -36,41 +34,36 @@ export function AudioDetector() {
     if (!file) return;
 
     setIsLoading(true);
-    setProgress(15);
     setError(null);
 
     try {
-      const result = await scanAudioFile(file, (pct) => {
-        setProgress(Math.min(90, Math.max(20, pct)));
-      });
-
-      setProgress(100);
+      const result = await scanAudioFile(file);
       setReport(result.data);
 
-      if (result.data.deepfakeScore < 30) {
+      if (result.data.verdict === 'AUTHENTIC') {
         confetti({
-          particleCount: 50,
+          particleCount: 40,
           spread: 60,
           origin: { y: 0.8 },
         });
       }
     } catch (err) {
-      setError(err.message || 'Audio synthetic speech audit failed.');
+      setError(err.message || 'Audio analysis failed. Please try again.');
     } finally {
       setIsLoading(false);
     }
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-5 fade-in">
       <Card>
         <CardHeader>
           <div className="flex items-center gap-2">
-            <Mic className="w-5 h-5 text-sky-400" />
-            <CardTitle>AI Voice Clone & Synthetic Audio Detector</CardTitle>
+            <Mic className="w-4 h-4 text-zinc-300" />
+            <CardTitle>Voice Clone & Synthetic Audio Check</CardTitle>
           </div>
           <CardDescription>
-            Detects neural voice clones (ElevenLabs, Tortoise, VALL-E), vocoder spectral cutoff, artificial phase coherence, and unnatural acoustic silence.
+            Check whether an audio recording is a real human voice or created using AI voice cloning tools like ElevenLabs or Tortoise.
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
@@ -85,24 +78,24 @@ export function AudioDetector() {
 
           {error && <Alert variant="destructive">{error}</Alert>}
 
-          <div className="flex items-center justify-between pt-2">
-            <span className="text-xs text-slate-400">
-              {file ? `Target Audio: ${file.name}` : 'Upload MP3, WAV, or AAC audio file'}
+          <div className="flex items-center justify-between pt-1">
+            <span className="text-xs text-zinc-500">
+              {file ? file.name : 'Upload MP3, WAV, or M4A voice clip'}
             </span>
             <Button
               onClick={handleScan}
               disabled={!file || isLoading}
-              className="gap-2 px-6 shadow-sky-600/30"
+              className="gap-2"
             >
               {isLoading ? (
                 <>
-                  <RefreshCw className="w-4 h-4 animate-spin" />
-                  Analyzing Acoustic Formants ({progress}%)...
+                  <RefreshCw className="w-3.5 h-3.5 animate-spin" />
+                  Analyzing Voice...
                 </>
               ) : (
                 <>
-                  <Sparkles className="w-4 h-4 text-sky-200" />
-                  Run Voice Clone Scan
+                  <Sparkles className="w-3.5 h-3.5" />
+                  Analyze Voice
                 </>
               )}
             </Button>
@@ -111,48 +104,48 @@ export function AudioDetector() {
       </Card>
 
       {report && (
-        <div className="space-y-6 animate-fadeIn">
+        <div className="space-y-5 fade-in">
           <VerdictBanner
             verdict={report.verdict}
             confidenceLevel={report.confidenceLevel}
             scanId={report.scanId}
           />
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <Card className="flex flex-col items-center justify-center p-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+            <Card className="flex flex-col items-center justify-center p-5">
               <ForensicScoreGauge
                 deepfakeScore={report.deepfakeScore}
                 authenticityScore={report.authenticityScore}
               />
             </Card>
 
-            <Card className="md:col-span-2 p-6">
-              <h3 className="text-sm font-bold text-slate-100 uppercase tracking-wider mb-4">
-                Spectral & Acoustic Acoustics
+            <Card className="md:col-span-2 p-5">
+              <h3 className="text-xs font-semibold text-zinc-300 uppercase tracking-wider mb-4">
+                Voice & Acoustic Checks
               </h3>
               <ForensicMatrixRadar breakdown={report.forensicBreakdown} />
             </Card>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <Card className="p-6">
-              <h3 className="text-sm font-bold text-slate-100 uppercase tracking-wider mb-3">
-                Acoustic Forensic Evaluation
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+            <Card className="p-5">
+              <h3 className="text-xs font-semibold text-zinc-300 uppercase tracking-wider mb-2.5">
+                Summary & Voice Naturalness
               </h3>
-              <p className="text-xs sm:text-sm text-slate-300 leading-relaxed bg-slate-900/60 p-4 rounded-xl border border-slate-800">
+              <p className="text-xs text-zinc-300 leading-relaxed bg-zinc-900/60 p-3.5 rounded-lg border border-zinc-800">
                 {report.summaryText}
               </p>
             </Card>
 
-            <Card className="p-6">
-              <h3 className="text-sm font-bold text-slate-100 uppercase tracking-wider mb-3">
-                Acoustic Anomalies
+            <Card className="p-5">
+              <h3 className="text-xs font-semibold text-zinc-300 uppercase tracking-wider mb-2.5">
+                Acoustic Findings
               </h3>
               <AnomaliesList anomalies={report.detectedAnomalies} />
             </Card>
           </div>
 
-          <Card className="p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <Card className="p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
             <EngineProvenanceBadge engines={report.engines} />
             <ExportReportButtons scanId={report.scanId} />
           </Card>
@@ -161,4 +154,3 @@ export function AudioDetector() {
     </div>
   );
 }
-

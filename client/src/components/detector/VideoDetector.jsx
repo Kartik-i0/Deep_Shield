@@ -16,14 +16,12 @@ import confetti from 'canvas-confetti';
 export function VideoDetector() {
   const [file, setFile] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [progress, setProgress] = useState(0);
   const [error, setError] = useState(null);
   const [report, setReport] = useState(null);
 
   const handleFileSelect = (selectedFile) => {
     setFile(selectedFile);
     setError(null);
-    setReport(null);
   };
 
   const handleClear = () => {
@@ -36,41 +34,36 @@ export function VideoDetector() {
     if (!file) return;
 
     setIsLoading(true);
-    setProgress(15);
     setError(null);
 
     try {
-      const result = await scanVideoFile(file, (pct) => {
-        setProgress(Math.min(90, Math.max(20, pct)));
-      });
-
-      setProgress(100);
+      const result = await scanVideoFile(file);
       setReport(result.data);
 
-      if (result.data.deepfakeScore < 30) {
+      if (result.data.verdict === 'AUTHENTIC') {
         confetti({
-          particleCount: 50,
+          particleCount: 40,
           spread: 60,
           origin: { y: 0.8 },
         });
       }
     } catch (err) {
-      setError(err.message || 'Video deepfake audit failed.');
+      setError(err.message || 'Video analysis failed. Please try again.');
     } finally {
       setIsLoading(false);
     }
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-5 fade-in">
       <Card>
         <CardHeader>
           <div className="flex items-center gap-2">
-            <Video className="w-5 h-5 text-sky-400" />
-            <CardTitle>Video Deepfake & Facial Replacement Detector</CardTitle>
+            <Video className="w-4 h-4 text-zinc-300" />
+            <CardTitle>Video & Deepfake Face-Swap Check</CardTitle>
           </div>
           <CardDescription>
-            Analyzes video streams for facial boundary warping, lip-sync misalignment, temporal flicker, and synthetic AI avatar generation.
+            Examine video files for AI face replacements, artificial lip-syncing, or synthetic avatar generation.
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
@@ -85,24 +78,24 @@ export function VideoDetector() {
 
           {error && <Alert variant="destructive">{error}</Alert>}
 
-          <div className="flex items-center justify-between pt-2">
-            <span className="text-xs text-slate-400">
-              {file ? `Target Video: ${file.name}` : 'Upload MP4 or WebM video (up to 50MB)'}
+          <div className="flex items-center justify-between pt-1">
+            <span className="text-xs text-zinc-500">
+              {file ? file.name : 'Upload MP4, WebM or MOV video up to 50 MB'}
             </span>
             <Button
               onClick={handleScan}
               disabled={!file || isLoading}
-              className="gap-2 px-6 shadow-sky-600/30"
+              className="gap-2"
             >
               {isLoading ? (
                 <>
-                  <RefreshCw className="w-4 h-4 animate-spin" />
-                  Extracting Frames & Analyzing ({progress}%)...
+                  <RefreshCw className="w-3.5 h-3.5 animate-spin" />
+                  Analyzing Video...
                 </>
               ) : (
                 <>
-                  <Sparkles className="w-4 h-4 text-sky-200" />
-                  Run Video Deepfake Scan
+                  <Sparkles className="w-3.5 h-3.5" />
+                  Analyze Video
                 </>
               )}
             </Button>
@@ -111,61 +104,48 @@ export function VideoDetector() {
       </Card>
 
       {report && (
-        <div className="space-y-6 animate-fadeIn">
+        <div className="space-y-5 fade-in">
           <VerdictBanner
             verdict={report.verdict}
             confidenceLevel={report.confidenceLevel}
             scanId={report.scanId}
           />
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <Card className="flex flex-col items-center justify-center p-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+            <Card className="flex flex-col items-center justify-center p-5">
               <ForensicScoreGauge
                 deepfakeScore={report.deepfakeScore}
                 authenticityScore={report.authenticityScore}
               />
             </Card>
 
-            <Card className="md:col-span-2 p-6">
-              <h3 className="text-sm font-bold text-slate-100 uppercase tracking-wider mb-4">
-                Temporal & Lip-Sync Reliability
+            <Card className="md:col-span-2 p-5">
+              <h3 className="text-xs font-semibold text-zinc-300 uppercase tracking-wider mb-4">
+                Movement & Face Realism
               </h3>
               <ForensicMatrixRadar breakdown={report.forensicBreakdown} />
             </Card>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <Card className="p-6">
-              <h3 className="text-sm font-bold text-slate-100 uppercase tracking-wider mb-3">
-                Temporal Motion Analysis
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+            <Card className="p-5">
+              <h3 className="text-xs font-semibold text-zinc-300 uppercase tracking-wider mb-2.5">
+                Summary & Details
               </h3>
-              <p className="text-xs sm:text-sm text-slate-300 leading-relaxed bg-slate-900/60 p-4 rounded-xl border border-slate-800">
+              <p className="text-xs text-zinc-300 leading-relaxed bg-zinc-900/60 p-3.5 rounded-lg border border-zinc-800">
                 {report.summaryText}
               </p>
-
-              {report.recommendations && report.recommendations.length > 0 && (
-                <div className="mt-4">
-                  <h4 className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">
-                    Verification Guidance
-                  </h4>
-                  <ul className="text-xs text-slate-300 space-y-1.5 list-disc pl-4">
-                    {report.recommendations.map((rec, i) => (
-                      <li key={i}>{rec}</li>
-                    ))}
-                  </ul>
-                </div>
-              )}
             </Card>
 
-            <Card className="p-6">
-              <h3 className="text-sm font-bold text-slate-100 uppercase tracking-wider mb-3">
-                Identified Temporal Anomalies
+            <Card className="p-5">
+              <h3 className="text-xs font-semibold text-zinc-300 uppercase tracking-wider mb-2.5">
+                Identified Points
               </h3>
               <AnomaliesList anomalies={report.detectedAnomalies} />
             </Card>
           </div>
 
-          <Card className="p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <Card className="p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
             <EngineProvenanceBadge engines={report.engines} />
             <ExportReportButtons scanId={report.scanId} />
           </Card>
@@ -174,4 +154,3 @@ export function VideoDetector() {
     </div>
   );
 }
-

@@ -21,9 +21,9 @@ export function AddKeyDialog({ open, onClose, onKeyAdded }) {
 
     try {
       const res = await testApiKey({ provider, key: keyValue.trim() });
-      setTestResult({ success: true, message: res.message });
+      setTestResult({ success: true, message: res.message || 'Key verified successfully.' });
     } catch (err) {
-      setTestResult({ success: false, message: err.message || 'Key validation failed.' });
+      setTestResult({ success: false, message: err.message || 'Key verification failed.' });
     } finally {
       setIsTesting(false);
     }
@@ -43,7 +43,7 @@ export function AddKeyDialog({ open, onClose, onKeyAdded }) {
       onKeyAdded();
       onClose();
     } catch (err) {
-      setError(err.message || 'Failed to register API key into pool.');
+      setError(err.message || 'Failed to save API key.');
     } finally {
       setIsSubmitting(false);
     }
@@ -52,81 +52,81 @@ export function AddKeyDialog({ open, onClose, onKeyAdded }) {
   return (
     <Dialog open={open} onClose={onClose} className="max-w-md">
       <DialogHeader>
-        <div className="flex items-center gap-2 text-sky-400">
-          <Key className="w-5 h-5" />
-          <DialogTitle>Add API Key to Rotation Pool</DialogTitle>
+        <div className="flex items-center gap-2 text-zinc-100">
+          <Key className="w-4 h-4 text-zinc-400" />
+          <DialogTitle>Add API Key</DialogTitle>
         </div>
         <DialogDescription>
-          DeepShield automatically rotates between multiple API keys. When one key reaches rate limit (429), it switches to the next available key instantly.
+          Enter your Gemini or Hugging Face key to run scans smoothly.
         </DialogDescription>
       </DialogHeader>
 
       <form onSubmit={handleSave} className="space-y-4">
         {/* Provider Toggle */}
         <div className="space-y-1.5">
-          <label className="text-xs font-semibold text-slate-300">Target AI Service</label>
+          <label className="text-xs font-medium text-zinc-300">Provider</label>
           <div className="grid grid-cols-2 gap-2">
             <button
               type="button"
               onClick={() => { setProvider('gemini'); setTestResult(null); }}
-              className={`flex items-center justify-center gap-2 p-3 rounded-xl border text-xs font-semibold transition-all ${
+              className={`flex items-center justify-center gap-2 p-2.5 rounded-lg border text-xs font-medium transition-all ${
                 provider === 'gemini'
-                  ? 'border-sky-500 bg-sky-500/10 text-sky-400'
-                  : 'border-slate-800 bg-slate-900 text-slate-400 hover:border-slate-700'
+                  ? 'border-zinc-200 bg-zinc-800 text-white'
+                  : 'border-zinc-800 bg-zinc-900/50 text-zinc-400 hover:border-zinc-700 hover:text-zinc-200'
               }`}
             >
-              <Sparkles className="w-4 h-4" />
-              Google Gemini API
+              <Sparkles className="w-3.5 h-3.5" />
+              Google Gemini
             </button>
             <button
               type="button"
               onClick={() => { setProvider('huggingface'); setTestResult(null); }}
-              className={`flex items-center justify-center gap-2 p-3 rounded-xl border text-xs font-semibold transition-all ${
+              className={`flex items-center justify-center gap-2 p-2.5 rounded-lg border text-xs font-medium transition-all ${
                 provider === 'huggingface'
-                  ? 'border-purple-500 bg-purple-500/10 text-purple-400'
-                  : 'border-slate-800 bg-slate-900 text-slate-400 hover:border-slate-700'
+                  ? 'border-zinc-200 bg-zinc-800 text-white'
+                  : 'border-zinc-800 bg-zinc-900/50 text-zinc-400 hover:border-zinc-700 hover:text-zinc-200'
               }`}
             >
-              <Key className="w-4 h-4" />
-              Hugging Face Token
+              <Key className="w-3.5 h-3.5" />
+              Hugging Face
             </button>
           </div>
         </div>
 
         {/* Key Input */}
         <div className="space-y-1.5">
-          <label className="text-xs font-semibold text-slate-300">
-            {provider === 'gemini' ? 'Gemini API Key (AIza...)' : 'Hugging Face User Access Token (hf_...)'}
+          <label className="text-xs font-medium text-zinc-300">
+            {provider === 'gemini' ? 'Gemini API Key' : 'Hugging Face Token'}
           </label>
           <input
             type="password"
             value={keyValue}
             onChange={(e) => setKeyValue(e.target.value)}
-            placeholder={provider === 'gemini' ? 'AIzaSy...' : 'hf_xxxxxxxxxxxxxxxxx'}
-            className="w-full rounded-xl bg-slate-950 border border-slate-800 p-3 text-xs text-slate-100 placeholder:text-slate-600 focus:outline-none focus:ring-2 focus:ring-sky-500"
+            placeholder={provider === 'gemini' ? 'AIzaSy...' : 'hf_...'}
+            className="w-full rounded-lg bg-zinc-950 border border-zinc-800 p-2.5 text-xs text-zinc-100 placeholder:text-zinc-600 focus:outline-none focus:border-zinc-500"
             required
           />
         </div>
 
         {testResult && (
-          <Alert variant={testResult.success ? 'success' : 'destructive'} className="text-xs py-2.5">
+          <Alert variant={testResult.success ? 'success' : 'destructive'} className="text-xs py-2">
             {testResult.message}
           </Alert>
         )}
 
-        {error && <Alert variant="destructive" className="text-xs py-2.5">{error}</Alert>}
+        {error && <Alert variant="destructive" className="text-xs py-2">{error}</Alert>}
 
-        <div className="flex items-center justify-between pt-3 border-t border-slate-800">
+        <div className="flex items-center justify-between pt-3 border-t border-zinc-800">
           <Button
             type="button"
             variant="ghost"
             size="sm"
             onClick={handleTest}
             disabled={!keyValue.trim() || isTesting || isSubmitting}
-            className="text-xs text-slate-400 hover:text-slate-200"
+            className="text-xs text-zinc-400 hover:text-zinc-200"
           >
             {isTesting ? <RefreshCw className="w-3.5 h-3.5 animate-spin mr-1" /> : null}
-            Test Key First
+            Test Key
           </Button>
 
           <div className="flex items-center gap-2">
@@ -140,7 +140,7 @@ export function AddKeyDialog({ open, onClose, onKeyAdded }) {
               className="gap-1.5"
             >
               {isSubmitting ? <RefreshCw className="w-3.5 h-3.5 animate-spin" /> : <Check className="w-3.5 h-3.5" />}
-              Save to Pool
+              Save Key
             </Button>
           </div>
         </div>

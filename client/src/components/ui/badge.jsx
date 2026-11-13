@@ -3,18 +3,18 @@ import { cn } from '@/lib/utils';
 
 export function Badge({ className, variant = 'default', children, ...props }) {
   const variants = {
-    default: "bg-sky-500/20 text-sky-400 border-sky-500/30",
-    success: "bg-emerald-500/20 text-emerald-400 border-emerald-500/30",
-    warning: "bg-amber-500/20 text-amber-400 border-amber-500/30",
-    destructive: "bg-rose-500/20 text-rose-400 border-rose-500/30",
-    outline: "bg-slate-800/60 text-slate-300 border-slate-700",
-    purple: "bg-purple-500/20 text-purple-400 border-purple-500/30",
+    default: "bg-zinc-800 text-zinc-200 border-zinc-700",
+    success: "bg-emerald-950/40 text-emerald-300 border-emerald-800/60",
+    warning: "bg-amber-950/40 text-amber-300 border-amber-800/60",
+    destructive: "bg-rose-950/40 text-rose-300 border-rose-800/60",
+    outline: "bg-transparent text-zinc-400 border-zinc-800",
+    secondary: "bg-zinc-900 text-zinc-300 border-zinc-800",
   };
 
   return (
     <span
       className={cn(
-        "inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-medium border transition-colors",
+        "inline-flex items-center gap-1 px-2.5 py-0.5 rounded-md text-[11px] font-medium border transition-colors",
         variants[variant],
         className
       )}
@@ -24,4 +24,3 @@ export function Badge({ className, variant = 'default', children, ...props }) {
     </span>
   );
 }
-

@@ -1,5 +1,5 @@
-import React, { useRef, useState } from 'react';
-import { UploadCloud, File, X, CheckCircle2 } from 'lucide-react';
+import React, { useRef, useState, useEffect } from 'react';
+import { UploadCloud, File, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { formatBytes } from '@/lib/utils';
 
@@ -15,6 +15,16 @@ export function DropZoneUploader({
   const [isDragOver, setIsDragOver] = useState(false);
   const [previewUrl, setPreviewUrl] = useState(null);
 
+  useEffect(() => {
+    if (selectedFile && selectedFile.type?.startsWith('image/')) {
+      const url = URL.createObjectURL(selectedFile);
+      setPreviewUrl(url);
+      return () => URL.revokeObjectURL(url);
+    } else {
+      setPreviewUrl(null);
+    }
+  }, [selectedFile]);
+
   const handleDragOver = (e) => {
     e.preventDefault();
     if (!disabled) setIsDragOver(true);
@@ -29,32 +39,22 @@ export function DropZoneUploader({
     setIsDragOver(false);
     if (disabled) return;
     if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
-      const file = e.dataTransfer.files[0];
-      processFile(file);
+      processFile(e.dataTransfer.files[0]);
     }
   };
 
   const handleFileInputChange = (e) => {
     if (e.target.files && e.target.files.length > 0) {
-      const file = e.target.files[0];
-      processFile(file);
+      processFile(e.target.files[0]);
     }
   };
 
   const processFile = (file) => {
     onFileSelect(file);
-    if (file.type.startsWith('image/')) {
-      const url = URL.createObjectURL(file);
-      setPreviewUrl(url);
-    } else {
-      setPreviewUrl(null);
-    }
   };
 
   const handleClear = (e) => {
     e.stopPropagation();
-    if (previewUrl) URL.revokeObjectURL(previewUrl);
-    setPreviewUrl(null);
     if (fileInputRef.current) fileInputRef.current.value = '';
     onClear();
   };
@@ -76,47 +76,45 @@ export function DropZoneUploader({
           onDragOver={handleDragOver}
           onDragLeave={handleDragLeave}
           onDrop={handleDrop}
-          className={`relative group cursor-pointer flex flex-col items-center justify-center p-8 sm:p-12 border-2 border-dashed rounded-2xl transition-all duration-200 ${
+          className={`cursor-pointer flex flex-col items-center justify-center p-8 sm:p-10 border border-dashed rounded-xl transition-all duration-150 ${
             isDragOver
-              ? "border-sky-500 bg-sky-500/10 scale-[1.01]"
-              : "border-slate-700/80 hover:border-sky-500/60 bg-slate-900/40 hover:bg-slate-900/70"
+              ? "border-zinc-400 bg-zinc-900/60"
+              : "border-zinc-800 hover:border-zinc-700 bg-zinc-950/40 hover:bg-zinc-900/30"
           } ${disabled ? "opacity-50 cursor-not-allowed" : ""}`}
         >
-          <div className="p-4 rounded-2xl bg-sky-950/40 border border-sky-800/50 text-sky-400 group-hover:scale-110 transition-transform">
-            <UploadCloud className="w-8 h-8" />
+          <div className="w-10 h-10 rounded-lg bg-zinc-900 border border-zinc-800 text-zinc-300 flex items-center justify-center mb-3">
+            <UploadCloud className="w-5 h-5" />
           </div>
 
-          <div className="mt-4 text-center">
-            <p className="text-sm font-semibold text-slate-200">
-              Drag & drop your {mediaType} file here, or <span className="text-sky-400 underline">browse</span>
+          <div className="text-center">
+            <p className="text-xs font-semibold text-zinc-200">
+              Click to upload {mediaType} or drag and drop
             </p>
-            <p className="text-xs text-slate-400 mt-1">
-              Supports {accept.replace(/\/\*/g, '').toUpperCase()} up to 50MB
+            <p className="text-[11px] text-zinc-500 mt-1">
+              Supports standard {accept.replace(/\/\*/g, '').toUpperCase()} files up to 50 MB
             </p>
           </div>
         </div>
       ) : (
-        <div className="relative p-4 rounded-2xl bg-slate-900/90 border border-slate-700/80 flex items-center justify-between gap-4">
-          <div className="flex items-center gap-3.5 min-w-0">
+        <div className="p-3.5 rounded-xl bg-zinc-900/60 border border-zinc-800 flex items-center justify-between gap-4">
+          <div className="flex items-center gap-3 min-w-0">
             {previewUrl ? (
               <img
                 src={previewUrl}
                 alt="Preview"
-                className="w-16 h-16 rounded-xl object-cover border border-slate-700 shrink-0"
+                className="w-12 h-12 rounded-lg object-cover border border-zinc-800 shrink-0"
               />
             ) : (
-              <div className="w-16 h-16 rounded-xl bg-slate-800 border border-slate-700 flex items-center justify-center text-sky-400 shrink-0">
-                <File className="w-8 h-8" />
+              <div className="w-12 h-12 rounded-lg bg-zinc-800/80 border border-zinc-700/60 flex items-center justify-center text-zinc-300 shrink-0">
+                <File className="w-6 h-6" />
               </div>
             )}
 
             <div className="min-w-0">
-              <h4 className="text-sm font-semibold text-slate-100 truncate">{selectedFile.name}</h4>
-              <p className="text-xs text-slate-400 mt-0.5">{formatBytes(selectedFile.size)} • {selectedFile.type || 'Media File'}</p>
-              <div className="flex items-center gap-1.5 mt-1 text-[11px] text-emerald-400">
-                <CheckCircle2 className="w-3.5 h-3.5" />
-                <span>Ready for deepfake scan</span>
-              </div>
+              <h4 className="text-xs font-semibold text-zinc-200 truncate">{selectedFile.name}</h4>
+              <p className="text-[11px] text-zinc-400 mt-0.5">
+                {formatBytes(selectedFile.size)} • Ready for check
+              </p>
             </div>
           </div>
 
@@ -126,13 +124,12 @@ export function DropZoneUploader({
             size="icon"
             onClick={handleClear}
             disabled={disabled}
-            className="text-slate-400 hover:text-rose-400 shrink-0"
+            className="text-zinc-500 hover:text-zinc-200"
           >
-            <X className="w-5 h-5" />
+            <X className="w-4 h-4" />
           </Button>
         </div>
       )}
     </div>
   );
 }
-

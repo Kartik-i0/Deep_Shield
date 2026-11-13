@@ -1,21 +1,19 @@
 import React from 'react';
-import { ShieldCheck, Heart } from 'lucide-react';
+import { Shield } from 'lucide-react';
 
 export function Footer() {
   return (
-    <footer className="w-full border-t border-slate-800/60 bg-slate-950/40 py-8 mt-16 text-xs text-slate-400">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
+    <footer className="w-full border-t border-zinc-900 bg-zinc-950 py-6 mt-16 text-xs text-zinc-500">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left">
         <div className="flex items-center gap-2">
-          <ShieldCheck className="w-4 h-4 text-sky-400" />
-          <span className="font-semibold text-slate-200">DeepShield Forensics</span>
-          <span>• Open-Source Deepfake Detection System</span>
+          <Shield className="w-3.5 h-3.5 text-zinc-400" />
+          <span className="font-medium text-zinc-300">DeepShield</span>
+          <span>— Digital Content Authenticity Checker</span>
         </div>
-
-        <div className="text-slate-400 text-[11px]">
-          Powered by Google Gemini 1.5/2.0 API, Hugging Face Transformers, ELA Signal Processing & MERN
+        <div className="text-zinc-600 text-[11px]">
+          Powered by Gemini Vision AI & Open Source Detection Models
         </div>
       </div>
     </footer>
   );
 }
-

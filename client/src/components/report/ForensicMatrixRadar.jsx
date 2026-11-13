@@ -4,54 +4,49 @@ import { Progress } from '@/components/ui/progress';
 export function ForensicMatrixRadar({ breakdown }) {
   if (!breakdown) return null;
 
-  const metrics = [
+  const checks = [
     {
-      key: 'facialConsistency',
-      label: 'Facial & Structural Geometry',
-      desc: 'Checks eye reflection, ear symmetry, and teeth contours',
-      val: breakdown.facialConsistency ?? 90,
+      title: 'Physical Reality & Details',
+      desc: 'Checks hands, facial features, edges, and texture naturalness',
+      val: breakdown.facialConsistency ?? 95,
     },
     {
-      key: 'lightingAcousticPhysics',
-      label: 'Lighting & Physics Consistency',
-      desc: 'Shadow vectors, room acoustic reflections, and ambient reverb',
-      val: breakdown.lightingAcousticPhysics ?? 88,
+      title: 'Lighting & Environment',
+      desc: 'Verifies if shadows, reflections, and ambient lighting look real',
+      val: breakdown.lightingAcousticPhysics ?? 92,
     },
     {
-      key: 'compressionFrequencyPurity',
-      label: 'Compression & Frequency Spectrum',
-      desc: 'High-frequency vocoder cutoff, DCT noise, and ELA error',
-      val: breakdown.compressionFrequencyPurity ?? 85,
+      title: 'Digital Quality & Artifacts',
+      desc: 'Looks for telltale AI blur, diffusion noise, or compression seams',
+      val: breakdown.compressionFrequencyPurity ?? 90,
     },
     {
-      key: 'metadataIntegrity',
-      label: 'Metadata & Hardware Provenance',
-      desc: 'Camera EXIF profile, software headers, and C2PA markers',
-      val: breakdown.metadataIntegrity ?? 80,
+      title: 'Source & Origin Checks',
+      desc: 'Analyzes digital camera traces and file integrity',
+      val: breakdown.metadataIntegrity ?? 94,
     },
   ];
 
   const getColor = (v) => {
-    if (v >= 80) return 'emerald';
-    if (v >= 50) return 'amber';
+    if (v >= 70) return 'emerald';
+    if (v >= 45) return 'amber';
     return 'rose';
   };
 
   return (
     <div className="space-y-4">
-      {metrics.map((m) => (
-        <div key={m.key} className="space-y-1.5">
+      {checks.map((c, i) => (
+        <div key={i} className="space-y-1.5">
           <div className="flex items-center justify-between text-xs">
             <div>
-              <span className="font-semibold text-slate-200">{m.label}</span>
-              <span className="text-slate-400 text-[11px] ml-2 hidden sm:inline">({m.desc})</span>
+              <span className="font-medium text-zinc-200">{c.title}</span>
+              <span className="text-zinc-500 text-[11px] ml-2 hidden sm:inline">— {c.desc}</span>
             </div>
-            <span className="font-mono font-bold text-slate-100">{m.val}%</span>
+            <span className="font-mono text-zinc-300 font-semibold">{c.val}%</span>
           </div>
-          <Progress value={m.val} color={getColor(m.val)} className="h-2 bg-slate-800" />
+          <Progress value={c.val} color={getColor(c.val)} className="h-1.5 bg-zinc-900" />
         </div>
       ))}
     </div>
   );
 }
-

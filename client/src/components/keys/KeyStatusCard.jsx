@@ -1,55 +1,44 @@
 import React from 'react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Key, Trash2, Clock, CheckCircle2, AlertTriangle, ShieldAlert } from 'lucide-react';
+import { Key, Trash2, Clock, CheckCircle2 } from 'lucide-react';
 
 export function KeyStatusCard({ keyItem, provider, onDelete }) {
   const isRateLimited = keyItem.status === 'RATE_LIMITED';
-  const isInvalid = keyItem.status === 'INVALID';
   const isActive = keyItem.status === 'ACTIVE';
 
   return (
-    <div className="flex items-center justify-between p-3.5 rounded-xl bg-slate-900/80 border border-slate-800 text-xs hover:border-slate-700 transition-all">
+    <div className="flex items-center justify-between p-3 rounded-lg bg-zinc-900/60 border border-zinc-800 text-xs hover:border-zinc-700 transition-all">
       <div className="flex items-center gap-3 min-w-0">
-        <div className={`p-2 rounded-lg ${isActive ? 'bg-sky-950/60 text-sky-400' : isRateLimited ? 'bg-amber-950/60 text-amber-400' : 'bg-rose-950/60 text-rose-400'}`}>
-          <Key className="w-4 h-4" />
+        <div className="p-1.5 rounded-md bg-zinc-800 text-zinc-300">
+          <Key className="w-3.5 h-3.5" />
         </div>
 
         <div className="min-w-0">
           <div className="flex items-center gap-2">
-            <span className="font-mono font-bold text-slate-100">{keyItem.masked}</span>
-            <Badge variant="outline" className="text-[10px] py-0 px-1.5 uppercase">
+            <span className="font-mono font-medium text-zinc-200">{keyItem.masked}</span>
+            <Badge variant="outline" className="text-[10px] py-0 px-1.5 uppercase border-zinc-800 text-zinc-500">
               {keyItem.source}
             </Badge>
           </div>
-          <div className="flex items-center gap-3 mt-1 text-[11px] text-slate-400">
-            <span>Requests: <strong className="text-slate-200">{keyItem.requestCount}</strong></span>
-            {keyItem.errorCount > 0 && (
-              <span>Errors: <strong className="text-rose-400">{keyItem.errorCount}</strong></span>
-            )}
+          <div className="flex items-center gap-2 mt-0.5 text-[11px] text-zinc-500">
+            <span>Requests: <strong className="text-zinc-300">{keyItem.requestCount}</strong></span>
           </div>
         </div>
       </div>
 
-      <div className="flex items-center gap-3">
+      <div className="flex items-center gap-2.5">
         {isActive && (
           <Badge variant="success" className="gap-1">
-            <CheckCircle2 className="w-3 h-3" />
+            <CheckCircle2 className="w-3 h-3 text-emerald-400" />
             Active
           </Badge>
         )}
 
         {isRateLimited && (
-          <Badge variant="warning" className="gap-1 animate-pulse">
-            <Clock className="w-3 h-3" />
+          <Badge variant="warning" className="gap-1">
+            <Clock className="w-3 h-3 text-amber-400" />
             Cooldown ({keyItem.cooldownRemainingSeconds}s)
-          </Badge>
-        )}
-
-        {isInvalid && (
-          <Badge variant="destructive" className="gap-1">
-            <ShieldAlert className="w-3 h-3" />
-            Invalid
           </Badge>
         )}
 
@@ -57,8 +46,8 @@ export function KeyStatusCard({ keyItem, provider, onDelete }) {
           variant="ghost"
           size="icon"
           onClick={() => onDelete(provider, keyItem.id)}
-          className="text-slate-500 hover:text-rose-400 h-8 w-8"
-          title="Remove key from pool"
+          className="text-zinc-500 hover:text-rose-400 h-7 w-7"
+          title="Remove key"
         >
           <Trash2 className="w-3.5 h-3.5" />
         </Button>
@@ -66,4 +55,3 @@ export function KeyStatusCard({ keyItem, provider, onDelete }) {
     </div>
   );
 }
-
