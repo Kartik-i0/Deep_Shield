@@ -87,18 +87,18 @@ export function TextDetector() {
               value={text}
               onChange={(e) => setText(e.target.value)}
               placeholder="Paste article, email, message, or essay text here..."
-              className="w-full rounded-lg bg-zinc-900/60 border border-zinc-800 p-3.5 text-xs text-zinc-100 placeholder:text-zinc-600 focus:outline-none focus:ring-1 focus:ring-zinc-400 focus:border-zinc-700 transition-all leading-relaxed"
+              className="w-full rounded-lg bg-zinc-50 dark:bg-zinc-900/60 border border-zinc-200 dark:border-zinc-800 p-3.5 text-xs text-zinc-900 dark:text-zinc-100 placeholder:text-zinc-400 dark:placeholder:text-zinc-600 focus:outline-none focus:ring-1 focus:ring-zinc-400 focus:border-zinc-500 transition-all leading-relaxed"
               disabled={isLoading}
             />
 
             <div className="flex items-center justify-between text-[11px] text-zinc-500 mt-2 px-1">
               <span>
-                {wordCount} words • {charCount} characters {wordCount < 10 && text.length > 0 && <span className="text-amber-400">(Min 10 words required)</span>}
+                {wordCount} words • {charCount} characters {wordCount < 10 && text.length > 0 && <span className="text-amber-500">(Min 10 words required)</span>}
               </span>
               {text.length > 0 && (
                 <button
                   onClick={handleClear}
-                  className="flex items-center gap-1 text-zinc-500 hover:text-zinc-300 transition-colors"
+                  className="flex items-center gap-1 text-zinc-400 hover:text-zinc-700 dark:text-zinc-500 dark:hover:text-zinc-300 transition-colors"
                 >
                   <Trash2 className="w-3.5 h-3.5" />
                   Clear text
@@ -148,7 +148,7 @@ export function TextDetector() {
             </Card>
 
             <Card className="md:col-span-2 p-5">
-              <h3 className="text-xs font-semibold text-zinc-300 uppercase tracking-wider mb-4">
+              <h3 className="text-xs font-semibold text-zinc-700 dark:text-zinc-300 uppercase tracking-wider mb-4">
                 Writing Naturalness
               </h3>
               <ForensicMatrixRadar breakdown={report.forensicBreakdown} />
@@ -157,16 +157,16 @@ export function TextDetector() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
             <Card className="p-5">
-              <h3 className="text-xs font-semibold text-zinc-300 uppercase tracking-wider mb-2.5">
+              <h3 className="text-xs font-semibold text-zinc-700 dark:text-zinc-300 uppercase tracking-wider mb-2.5">
                 Summary & Stylistic Tone
               </h3>
-              <p className="text-xs text-zinc-300 leading-relaxed bg-zinc-900/60 p-3.5 rounded-lg border border-zinc-800">
+              <p className="text-xs text-zinc-800 dark:text-zinc-300 leading-relaxed bg-zinc-50 dark:bg-zinc-900/60 p-3.5 rounded-lg border border-zinc-200 dark:border-zinc-800">
                 {report.summaryText}
               </p>
             </Card>
 
             <Card className="p-5">
-              <h3 className="text-xs font-semibold text-zinc-300 uppercase tracking-wider mb-2.5">
+              <h3 className="text-xs font-semibold text-zinc-700 dark:text-zinc-300 uppercase tracking-wider mb-2.5">
                 Observed Clichés & Patterns
               </h3>
               <AnomaliesList anomalies={report.detectedAnomalies} />

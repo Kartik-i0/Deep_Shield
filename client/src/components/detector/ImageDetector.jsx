@@ -128,7 +128,7 @@ export function ImageDetector() {
                   size="sm"
                   variant="outline"
                   onClick={() => setShowElaModal(true)}
-                  className="mt-4 w-full gap-1.5 text-xs text-zinc-400 hover:text-white"
+                  className="mt-4 w-full gap-1.5 text-xs text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white"
                 >
                   <Eye className="w-3.5 h-3.5" />
                   View Compression Heatmap
@@ -137,7 +137,7 @@ export function ImageDetector() {
             </Card>
 
             <Card className="md:col-span-2 p-5">
-              <h3 className="text-xs font-semibold text-zinc-300 uppercase tracking-wider mb-4">
+              <h3 className="text-xs font-semibold text-zinc-700 dark:text-zinc-300 uppercase tracking-wider mb-4">
                 Detailed Authenticity Breakdown
               </h3>
               <ForensicMatrixRadar breakdown={report.forensicBreakdown} />
@@ -146,19 +146,19 @@ export function ImageDetector() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
             <Card className="p-5">
-              <h3 className="text-xs font-semibold text-zinc-300 uppercase tracking-wider mb-2.5">
+              <h3 className="text-xs font-semibold text-zinc-700 dark:text-zinc-300 uppercase tracking-wider mb-2.5">
                 Explanation & Summary
               </h3>
-              <p className="text-xs text-zinc-300 leading-relaxed bg-zinc-900/60 p-3.5 rounded-lg border border-zinc-800">
+              <p className="text-xs text-zinc-800 dark:text-zinc-300 leading-relaxed bg-zinc-50 dark:bg-zinc-900/60 p-3.5 rounded-lg border border-zinc-200 dark:border-zinc-800">
                 {report.summaryText}
               </p>
 
               {report.recommendations && report.recommendations.length > 0 && (
                 <div className="mt-4">
-                  <h4 className="text-[11px] font-medium text-zinc-400 uppercase tracking-wider mb-2">
+                  <h4 className="text-[11px] font-medium text-zinc-500 dark:text-zinc-400 uppercase tracking-wider mb-2">
                     What should you do?
                   </h4>
-                  <ul className="text-xs text-zinc-300 space-y-1 list-disc pl-4">
+                  <ul className="text-xs text-zinc-700 dark:text-zinc-300 space-y-1 list-disc pl-4">
                     {report.recommendations.map((rec, i) => (
                       <li key={i}>{rec}</li>
                     ))}
@@ -168,7 +168,7 @@ export function ImageDetector() {
             </Card>
 
             <Card className="p-5">
-              <h3 className="text-xs font-semibold text-zinc-300 uppercase tracking-wider mb-2.5">
+              <h3 className="text-xs font-semibold text-zinc-700 dark:text-zinc-300 uppercase tracking-wider mb-2.5">
                 Key Observations
               </h3>
               <AnomaliesList anomalies={report.detectedAnomalies} />

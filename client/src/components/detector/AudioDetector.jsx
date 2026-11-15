@@ -120,7 +120,7 @@ export function AudioDetector() {
             </Card>
 
             <Card className="md:col-span-2 p-5">
-              <h3 className="text-xs font-semibold text-zinc-300 uppercase tracking-wider mb-4">
+              <h3 className="text-xs font-semibold text-zinc-700 dark:text-zinc-300 uppercase tracking-wider mb-4">
                 Voice & Acoustic Checks
               </h3>
               <ForensicMatrixRadar breakdown={report.forensicBreakdown} />
@@ -129,16 +129,16 @@ export function AudioDetector() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
             <Card className="p-5">
-              <h3 className="text-xs font-semibold text-zinc-300 uppercase tracking-wider mb-2.5">
+              <h3 className="text-xs font-semibold text-zinc-700 dark:text-zinc-300 uppercase tracking-wider mb-2.5">
                 Summary & Voice Naturalness
               </h3>
-              <p className="text-xs text-zinc-300 leading-relaxed bg-zinc-900/60 p-3.5 rounded-lg border border-zinc-800">
+              <p className="text-xs text-zinc-800 dark:text-zinc-300 leading-relaxed bg-zinc-50 dark:bg-zinc-900/60 p-3.5 rounded-lg border border-zinc-200 dark:border-zinc-800">
                 {report.summaryText}
               </p>
             </Card>
 
             <Card className="p-5">
-              <h3 className="text-xs font-semibold text-zinc-300 uppercase tracking-wider mb-2.5">
+              <h3 className="text-xs font-semibold text-zinc-700 dark:text-zinc-300 uppercase tracking-wider mb-2.5">
                 Acoustic Findings
               </h3>
               <AnomaliesList anomalies={report.detectedAnomalies} />

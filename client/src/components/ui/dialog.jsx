@@ -9,13 +9,13 @@ export function Dialog({ open, onClose, children, className }) {
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm animate-fadeIn">
       <div
         className={cn(
-          "relative w-full max-w-lg bg-zinc-950 border border-zinc-800 rounded-xl shadow-2xl p-6 text-zinc-100 overflow-hidden",
+          "relative w-full max-w-lg bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-xl shadow-2xl p-6 text-zinc-900 dark:text-zinc-100 overflow-hidden",
           className
         )}
       >
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 p-1.5 rounded-md text-zinc-400 hover:text-white hover:bg-zinc-800 transition-colors"
+          className="absolute top-4 right-4 p-1.5 rounded-md text-zinc-400 hover:text-zinc-900 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
         >
           <X className="w-4 h-4" />
         </button>
@@ -30,9 +30,9 @@ export function DialogHeader({ className, children }) {
 }
 
 export function DialogTitle({ className, children }) {
-  return <h2 className={cn("text-base font-semibold text-white", className)}>{children}</h2>;
+  return <h2 className={cn("text-base font-semibold text-zinc-900 dark:text-white", className)}>{children}</h2>;
 }
 
 export function DialogDescription({ className, children }) {
-  return <p className={cn("text-xs text-zinc-400 mt-1", className)}>{children}</p>;
+  return <p className={cn("text-xs text-zinc-500 dark:text-zinc-400 mt-1", className)}>{children}</p>;
 }

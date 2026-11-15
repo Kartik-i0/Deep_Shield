@@ -11,11 +11,11 @@ export function VerdictBanner({ verdict, confidenceLevel = 'HIGH', scanId }) {
     >
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div className="flex items-center gap-3.5">
-          <div className={`p-2 rounded-lg border ${theme.border} bg-zinc-950/80`}>
+          <div className={`p-2 rounded-lg border ${theme.border} bg-white/90 dark:bg-zinc-950/80`}>
             {theme.isAI ? (
-              <ShieldAlert className="w-6 h-6 text-rose-400" />
+              <ShieldAlert className="w-6 h-6 text-rose-500 dark:text-rose-400" />
             ) : (
-              <ShieldCheck className="w-6 h-6 text-emerald-400" />
+              <ShieldCheck className="w-6 h-6 text-emerald-500 dark:text-emerald-400" />
             )}
           </div>
           <div>
@@ -27,7 +27,7 @@ export function VerdictBanner({ verdict, confidenceLevel = 'HIGH', scanId }) {
             <h2 className={`text-xl font-bold tracking-tight mt-0.5 ${theme.color}`}>
               {theme.label}
             </h2>
-            <p className="text-xs text-zinc-400 mt-0.5">
+            <p className="text-xs text-zinc-600 dark:text-zinc-400 mt-0.5">
               {theme.subtitle}
             </p>
           </div>

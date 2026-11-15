@@ -22,7 +22,7 @@ export function ExportReportButtons({ scanId }) {
         variant="outline"
         size="sm"
         onClick={() => window.open(getJsonDownloadUrl(scanId), '_blank')}
-        className="gap-1.5 text-zinc-400 hover:text-white"
+        className="gap-1.5 text-zinc-600 hover:text-zinc-950 dark:text-zinc-400 dark:hover:text-white"
       >
         <Download className="w-3.5 h-3.5" />
         JSON

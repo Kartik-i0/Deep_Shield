@@ -52,7 +52,7 @@ export function AddKeyDialog({ open, onClose, onKeyAdded }) {
   return (
     <Dialog open={open} onClose={onClose} className="max-w-md">
       <DialogHeader>
-        <div className="flex items-center gap-2 text-zinc-100">
+        <div className="flex items-center gap-2 text-zinc-900 dark:text-zinc-100">
           <Key className="w-4 h-4 text-zinc-400" />
           <DialogTitle>Add API Key</DialogTitle>
         </div>
@@ -64,15 +64,15 @@ export function AddKeyDialog({ open, onClose, onKeyAdded }) {
       <form onSubmit={handleSave} className="space-y-4">
         {/* Provider Toggle */}
         <div className="space-y-1.5">
-          <label className="text-xs font-medium text-zinc-300">Provider</label>
+          <label className="text-xs font-medium text-zinc-700 dark:text-zinc-300">Provider</label>
           <div className="grid grid-cols-2 gap-2">
             <button
               type="button"
               onClick={() => { setProvider('gemini'); setTestResult(null); }}
               className={`flex items-center justify-center gap-2 p-2.5 rounded-lg border text-xs font-medium transition-all ${
                 provider === 'gemini'
-                  ? 'border-zinc-200 bg-zinc-800 text-white'
-                  : 'border-zinc-800 bg-zinc-900/50 text-zinc-400 hover:border-zinc-700 hover:text-zinc-200'
+                  ? 'border-zinc-900 bg-zinc-900 text-white dark:border-zinc-200 dark:bg-zinc-800'
+                  : 'border-zinc-200 bg-zinc-50 dark:border-zinc-800 dark:bg-zinc-900/50 text-zinc-600 dark:text-zinc-400 hover:border-zinc-300 dark:hover:border-zinc-700'
               }`}
             >
               <Sparkles className="w-3.5 h-3.5" />
@@ -83,8 +83,8 @@ export function AddKeyDialog({ open, onClose, onKeyAdded }) {
               onClick={() => { setProvider('huggingface'); setTestResult(null); }}
               className={`flex items-center justify-center gap-2 p-2.5 rounded-lg border text-xs font-medium transition-all ${
                 provider === 'huggingface'
-                  ? 'border-zinc-200 bg-zinc-800 text-white'
-                  : 'border-zinc-800 bg-zinc-900/50 text-zinc-400 hover:border-zinc-700 hover:text-zinc-200'
+                  ? 'border-zinc-900 bg-zinc-900 text-white dark:border-zinc-200 dark:bg-zinc-800'
+                  : 'border-zinc-200 bg-zinc-50 dark:border-zinc-800 dark:bg-zinc-900/50 text-zinc-600 dark:text-zinc-400 hover:border-zinc-300 dark:hover:border-zinc-700'
               }`}
             >
               <Key className="w-3.5 h-3.5" />
@@ -95,7 +95,7 @@ export function AddKeyDialog({ open, onClose, onKeyAdded }) {
 
         {/* Key Input */}
         <div className="space-y-1.5">
-          <label className="text-xs font-medium text-zinc-300">
+          <label className="text-xs font-medium text-zinc-700 dark:text-zinc-300">
             {provider === 'gemini' ? 'Gemini API Key' : 'Hugging Face Token'}
           </label>
           <input
@@ -103,7 +103,7 @@ export function AddKeyDialog({ open, onClose, onKeyAdded }) {
             value={keyValue}
             onChange={(e) => setKeyValue(e.target.value)}
             placeholder={provider === 'gemini' ? 'AIzaSy...' : 'hf_...'}
-            className="w-full rounded-lg bg-zinc-950 border border-zinc-800 p-2.5 text-xs text-zinc-100 placeholder:text-zinc-600 focus:outline-none focus:border-zinc-500"
+            className="w-full rounded-lg bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 p-2.5 text-xs text-zinc-900 dark:text-zinc-100 placeholder:text-zinc-400 dark:placeholder:text-zinc-600 focus:outline-none focus:border-zinc-500"
             required
           />
         </div>

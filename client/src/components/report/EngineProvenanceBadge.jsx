@@ -12,22 +12,22 @@ export function EngineProvenanceBadge({ engines }) {
       </span>
 
       {engines.gemini?.used && (
-        <Badge variant="outline" className="border-zinc-800 text-zinc-300">
+        <Badge variant="outline" className="border-zinc-200 dark:border-zinc-800 text-zinc-700 dark:text-zinc-300">
           <Sparkles className="w-3 h-3 text-zinc-400" />
           Google Gemini Vision ({engines.gemini.model})
         </Badge>
       )}
 
       {engines.huggingFace?.used && (
-        <Badge variant="outline" className="border-zinc-800 text-zinc-300">
+        <Badge variant="outline" className="border-zinc-200 dark:border-zinc-800 text-zinc-700 dark:text-zinc-300">
           <Cpu className="w-3 h-3 text-zinc-400" />
           Hugging Face ({engines.huggingFace.model})
         </Badge>
       )}
 
       {engines.localForensics?.used && (
-        <Badge variant="outline" className="border-zinc-800 text-zinc-400">
-          <Layers className="w-3 h-3 text-zinc-500" />
+        <Badge variant="outline" className="border-zinc-200 dark:border-zinc-800 text-zinc-700 dark:text-zinc-400">
+          <Layers className="w-3 h-3 text-zinc-400" />
           Error Level Analysis (ELA)
         </Badge>
       )}

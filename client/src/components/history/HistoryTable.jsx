@@ -51,7 +51,7 @@ export function HistoryTable({ onSelectScan }) {
 
   return (
     <Card className="fade-in">
-      <CardHeader className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-zinc-800/80 pb-4">
+      <CardHeader className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-zinc-200 dark:border-zinc-800/80 pb-4">
         <div>
           <div className="flex items-center gap-2">
             <History className="w-4 h-4 text-zinc-400" />
@@ -64,15 +64,15 @@ export function HistoryTable({ onSelectScan }) {
 
         <div className="flex items-center gap-2">
           {/* Filter Pills */}
-          <div className="flex items-center gap-1 p-1 bg-zinc-900 border border-zinc-800 rounded-lg text-xs">
+          <div className="flex items-center gap-1 p-1 bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-lg text-xs">
             {['all', 'image', 'video', 'audio', 'text'].map((type) => (
               <button
                 key={type}
                 onClick={() => setMediaFilter(type)}
                 className={`px-2.5 py-1 rounded-md capitalize transition-colors ${
                   mediaFilter === type
-                    ? 'bg-zinc-800 text-white font-medium'
-                    : 'text-zinc-400 hover:text-zinc-200'
+                    ? 'bg-white dark:bg-zinc-800 text-zinc-900 dark:text-white font-medium shadow-2xs'
+                    : 'text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-200'
                 }`}
               >
                 {type}
@@ -80,7 +80,7 @@ export function HistoryTable({ onSelectScan }) {
             ))}
           </div>
 
-          <Button variant="ghost" size="icon" onClick={loadHistory} className="h-8 w-8 text-zinc-400 hover:text-zinc-200">
+          <Button variant="ghost" size="icon" onClick={loadHistory} className="h-8 w-8 text-zinc-400 hover:text-zinc-700 dark:hover:text-zinc-200">
             <RefreshCw className="w-3.5 h-3.5" />
           </Button>
         </div>
@@ -90,18 +90,18 @@ export function HistoryTable({ onSelectScan }) {
         {error && <Alert variant="destructive" className="mb-4">{error}</Alert>}
 
         {isLoading ? (
-          <div className="py-12 flex flex-col items-center justify-center text-zinc-400 text-xs">
+          <div className="py-12 flex flex-col items-center justify-center text-zinc-500 dark:text-zinc-400 text-xs">
             <RefreshCw className="w-5 h-5 animate-spin text-zinc-400 mb-2" />
             Loading scan history...
           </div>
         ) : history.length === 0 ? (
-          <div className="py-12 text-center text-xs text-zinc-500 border border-dashed border-zinc-800 rounded-lg">
+          <div className="py-12 text-center text-xs text-zinc-500 border border-dashed border-zinc-200 dark:border-zinc-800 rounded-lg">
             No scans recorded yet. Upload a file or paste text to see results here.
           </div>
         ) : (
           <div className="overflow-x-auto">
-            <table className="w-full text-left text-xs text-zinc-300">
-              <thead className="bg-zinc-900/60 text-zinc-400 uppercase tracking-wider text-[10px] border-b border-zinc-800">
+            <table className="w-full text-left text-xs text-zinc-800 dark:text-zinc-300">
+              <thead className="bg-zinc-100/70 dark:bg-zinc-900/60 text-zinc-600 dark:text-zinc-400 uppercase tracking-wider text-[10px] border-b border-zinc-200 dark:border-zinc-800">
                 <tr>
                   <th className="py-3 px-4 font-semibold">File / Content</th>
                   <th className="py-3 px-4 font-semibold">Type</th>
@@ -111,13 +111,13 @@ export function HistoryTable({ onSelectScan }) {
                   <th className="py-3 px-4 font-semibold text-right">Actions</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-zinc-800/60">
+              <tbody className="divide-y divide-zinc-200/80 dark:divide-zinc-800/60">
                 {history.map((item) => {
                   const theme = getVerdictTheme(item.verdict);
                   return (
-                    <tr key={item.scanId} className="hover:bg-zinc-900/40 transition-colors">
+                    <tr key={item.scanId} className="hover:bg-zinc-50 dark:hover:bg-zinc-900/40 transition-colors">
                       <td className="py-3 px-4">
-                        <div className="font-medium text-zinc-200 truncate max-w-[200px] sm:max-w-xs">
+                        <div className="font-medium text-zinc-900 dark:text-zinc-200 truncate max-w-[200px] sm:max-w-xs">
                           {item.fileName}
                         </div>
                         <div className="text-[10px] font-mono text-zinc-500">
@@ -125,7 +125,7 @@ export function HistoryTable({ onSelectScan }) {
                         </div>
                       </td>
                       <td className="py-3 px-4">
-                        <div className="flex items-center gap-1.5 capitalize text-zinc-400">
+                        <div className="flex items-center gap-1.5 capitalize text-zinc-500 dark:text-zinc-400">
                           {getMediaIcon(item.mediaType)}
                           {item.mediaType}
                         </div>
@@ -136,11 +136,11 @@ export function HistoryTable({ onSelectScan }) {
                         </span>
                       </td>
                       <td className="py-3 px-4">
-                        <span className={`font-mono font-medium ${item.deepfakeScore >= 60 ? 'text-zinc-200' : 'text-zinc-400'}`}>
+                        <span className={`font-mono font-medium ${item.deepfakeScore >= 60 ? 'text-rose-600 dark:text-rose-400' : 'text-zinc-600 dark:text-zinc-400'}`}>
                           {item.deepfakeScore}%
                         </span>
                       </td>
-                      <td className="py-3 px-4 text-zinc-400 whitespace-nowrap">
+                      <td className="py-3 px-4 text-zinc-500 dark:text-zinc-400 whitespace-nowrap">
                         {new Date(item.createdAt).toLocaleDateString(undefined, {
                           month: 'short',
                           day: 'numeric',
@@ -154,7 +154,7 @@ export function HistoryTable({ onSelectScan }) {
                             variant="ghost"
                             size="icon"
                             onClick={() => window.open(getPdfDownloadUrl(item.scanId), '_blank')}
-                            className="h-7 w-7 text-zinc-400 hover:text-zinc-100 hover:bg-zinc-800"
+                            className="h-7 w-7 text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-zinc-800"
                             title="Download PDF"
                           >
                             <FileText className="w-3.5 h-3.5" />
@@ -163,7 +163,7 @@ export function HistoryTable({ onSelectScan }) {
                             variant="ghost"
                             size="icon"
                             onClick={() => handleDelete(item.scanId)}
-                            className="h-7 w-7 text-zinc-500 hover:text-red-400 hover:bg-red-950/20"
+                            className="h-7 w-7 text-zinc-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-950/20"
                             title="Delete"
                           >
                             <Trash2 className="w-3.5 h-3.5" />

@@ -78,16 +78,16 @@ export function DropZoneUploader({
           onDrop={handleDrop}
           className={`cursor-pointer flex flex-col items-center justify-center p-8 sm:p-10 border border-dashed rounded-xl transition-all duration-150 ${
             isDragOver
-              ? "border-zinc-400 bg-zinc-900/60"
-              : "border-zinc-800 hover:border-zinc-700 bg-zinc-950/40 hover:bg-zinc-900/30"
+              ? "border-zinc-500 bg-zinc-100 dark:bg-zinc-900/60"
+              : "border-zinc-300 dark:border-zinc-800 hover:border-zinc-400 dark:hover:border-zinc-700 bg-zinc-50/70 dark:bg-zinc-950/40 hover:bg-zinc-100/50 dark:hover:bg-zinc-900/30"
           } ${disabled ? "opacity-50 cursor-not-allowed" : ""}`}
         >
-          <div className="w-10 h-10 rounded-lg bg-zinc-900 border border-zinc-800 text-zinc-300 flex items-center justify-center mb-3">
+          <div className="w-10 h-10 rounded-lg bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-zinc-700 dark:text-zinc-300 flex items-center justify-center mb-3">
             <UploadCloud className="w-5 h-5" />
           </div>
 
           <div className="text-center">
-            <p className="text-xs font-semibold text-zinc-200">
+            <p className="text-xs font-semibold text-zinc-800 dark:text-zinc-200">
               Click to upload {mediaType} or drag and drop
             </p>
             <p className="text-[11px] text-zinc-500 mt-1">
@@ -96,23 +96,23 @@ export function DropZoneUploader({
           </div>
         </div>
       ) : (
-        <div className="p-3.5 rounded-xl bg-zinc-900/60 border border-zinc-800 flex items-center justify-between gap-4">
+        <div className="p-3.5 rounded-xl bg-zinc-50 dark:bg-zinc-900/60 border border-zinc-200 dark:border-zinc-800 flex items-center justify-between gap-4">
           <div className="flex items-center gap-3 min-w-0">
             {previewUrl ? (
               <img
                 src={previewUrl}
                 alt="Preview"
-                className="w-12 h-12 rounded-lg object-cover border border-zinc-800 shrink-0"
+                className="w-12 h-12 rounded-lg object-cover border border-zinc-200 dark:border-zinc-800 shrink-0"
               />
             ) : (
-              <div className="w-12 h-12 rounded-lg bg-zinc-800/80 border border-zinc-700/60 flex items-center justify-center text-zinc-300 shrink-0">
+              <div className="w-12 h-12 rounded-lg bg-zinc-200 dark:bg-zinc-800/80 border border-zinc-300 dark:border-zinc-700/60 flex items-center justify-center text-zinc-700 dark:text-zinc-300 shrink-0">
                 <File className="w-6 h-6" />
               </div>
             )}
 
             <div className="min-w-0">
-              <h4 className="text-xs font-semibold text-zinc-200 truncate">{selectedFile.name}</h4>
-              <p className="text-[11px] text-zinc-400 mt-0.5">
+              <h4 className="text-xs font-semibold text-zinc-900 dark:text-zinc-200 truncate">{selectedFile.name}</h4>
+              <p className="text-[11px] text-zinc-500 dark:text-zinc-400 mt-0.5">
                 {formatBytes(selectedFile.size)} • Ready for check
               </p>
             </div>
@@ -124,7 +124,7 @@ export function DropZoneUploader({
             size="icon"
             onClick={handleClear}
             disabled={disabled}
-            className="text-zinc-500 hover:text-zinc-200"
+            className="text-zinc-400 hover:text-zinc-700 dark:text-zinc-500 dark:hover:text-zinc-200"
           >
             <X className="w-4 h-4" />
           </Button>

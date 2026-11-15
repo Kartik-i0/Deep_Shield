@@ -39,12 +39,12 @@ export function ForensicMatrixRadar({ breakdown }) {
         <div key={i} className="space-y-1.5">
           <div className="flex items-center justify-between text-xs">
             <div>
-              <span className="font-medium text-zinc-200">{c.title}</span>
+              <span className="font-medium text-zinc-800 dark:text-zinc-200">{c.title}</span>
               <span className="text-zinc-500 text-[11px] ml-2 hidden sm:inline">— {c.desc}</span>
             </div>
-            <span className="font-mono text-zinc-300 font-semibold">{c.val}%</span>
+            <span className="font-mono text-zinc-700 dark:text-zinc-300 font-semibold">{c.val}%</span>
           </div>
-          <Progress value={c.val} color={getColor(c.val)} className="h-1.5 bg-zinc-900" />
+          <Progress value={c.val} color={getColor(c.val)} className="h-1.5 bg-zinc-200 dark:bg-zinc-900" />
         </div>
       ))}
     </div>

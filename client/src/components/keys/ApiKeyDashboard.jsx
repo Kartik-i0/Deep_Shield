@@ -62,11 +62,11 @@ export function ApiKeyDashboard() {
     <div className="space-y-5 fade-in">
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>
-          <h2 className="text-lg font-bold text-white tracking-tight flex items-center gap-2">
+          <h2 className="text-lg font-bold text-zinc-900 dark:text-white tracking-tight flex items-center gap-2">
             <Key className="w-4 h-4 text-zinc-400" />
             API Keys & Quota Management
           </h2>
-          <p className="text-xs text-zinc-400 mt-0.5">
+          <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-0.5">
             Manage your Google Gemini API keys and Hugging Face tokens. The engine balances usage and handles rate-limits automatically.
           </p>
         </div>
@@ -98,16 +98,16 @@ export function ApiKeyDashboard() {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <Card className="p-4">
-          <div className="text-xs font-medium text-zinc-400">Gemini Keys Configured</div>
-          <div className="text-2xl font-bold text-white mt-1">
-            {gemini.total} <span className="text-xs font-normal text-emerald-400">({gemini.active} active)</span>
+          <div className="text-xs font-medium text-zinc-500 dark:text-zinc-400">Gemini Keys Configured</div>
+          <div className="text-2xl font-bold text-zinc-900 dark:text-white mt-1">
+            {gemini.total} <span className="text-xs font-normal text-emerald-600 dark:text-emerald-400">({gemini.active} active)</span>
           </div>
         </Card>
 
         <Card className="p-4">
-          <div className="text-xs font-medium text-zinc-400">Hugging Face Tokens</div>
-          <div className="text-2xl font-bold text-white mt-1">
-            {hf.total} <span className="text-xs font-normal text-emerald-400">({hf.active} active)</span>
+          <div className="text-xs font-medium text-zinc-500 dark:text-zinc-400">Hugging Face Tokens</div>
+          <div className="text-2xl font-bold text-zinc-900 dark:text-white mt-1">
+            {hf.total} <span className="text-xs font-normal text-emerald-600 dark:text-emerald-400">({hf.active} active)</span>
           </div>
         </Card>
       </div>
