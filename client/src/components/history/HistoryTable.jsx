@@ -95,13 +95,13 @@ export function HistoryTable({ onSelectScan }) {
             Loading scan history...
           </div>
         ) : history.length === 0 ? (
-          <div className="py-12 text-center text-xs text-zinc-500 border border-dashed border-zinc-200 dark:border-zinc-800 rounded-lg">
+          <div className="py-12 text-center text-xs text-zinc-500 border border-dashed border-zinc-200 dark:border-zinc-800 rounded-xl bg-zinc-50/50 dark:bg-zinc-900/30">
             No scans recorded yet. Upload a file or paste text to see results here.
           </div>
         ) : (
-          <div className="overflow-x-auto">
+          <div className="overflow-x-auto rounded-xl border border-zinc-200/80 dark:border-zinc-800/80 bg-white dark:bg-zinc-950">
             <table className="w-full text-left text-xs text-zinc-800 dark:text-zinc-300">
-              <thead className="bg-zinc-100/70 dark:bg-zinc-900/60 text-zinc-600 dark:text-zinc-400 uppercase tracking-wider text-[10px] border-b border-zinc-200 dark:border-zinc-800">
+              <thead className="bg-zinc-50/90 dark:bg-zinc-900/60 text-zinc-500 dark:text-zinc-400 uppercase tracking-wider text-[10px] border-b border-zinc-200 dark:border-zinc-800">
                 <tr>
                   <th className="py-3 px-4 font-semibold">File / Content</th>
                   <th className="py-3 px-4 font-semibold">Type</th>
@@ -113,30 +113,34 @@ export function HistoryTable({ onSelectScan }) {
               </thead>
               <tbody className="divide-y divide-zinc-200/80 dark:divide-zinc-800/60">
                 {history.map((item) => {
-                  const theme = getVerdictTheme(item.verdict);
+                  const isAI = item.verdict === 'AI_GENERATED';
                   return (
-                    <tr key={item.scanId} className="hover:bg-zinc-50 dark:hover:bg-zinc-900/40 transition-colors">
+                    <tr key={item.scanId} className="hover:bg-zinc-50/80 dark:hover:bg-zinc-900/40 transition-colors">
                       <td className="py-3 px-4">
-                        <div className="font-medium text-zinc-900 dark:text-zinc-200 truncate max-w-[200px] sm:max-w-xs">
+                        <div className="font-semibold text-zinc-900 dark:text-zinc-200 truncate max-w-[200px] sm:max-w-xs">
                           {item.fileName}
                         </div>
-                        <div className="text-[10px] font-mono text-zinc-500">
+                        <div className="text-[10px] font-mono text-zinc-400 dark:text-zinc-500">
                           {item.scanId.slice(0, 14)}...
                         </div>
                       </td>
                       <td className="py-3 px-4">
-                        <div className="flex items-center gap-1.5 capitalize text-zinc-500 dark:text-zinc-400">
+                        <div className="flex items-center gap-1.5 capitalize text-zinc-600 dark:text-zinc-400 font-medium">
                           {getMediaIcon(item.mediaType)}
                           {item.mediaType}
                         </div>
                       </td>
                       <td className="py-3 px-4">
-                        <span className={`px-2 py-0.5 rounded-md text-[10px] font-medium border ${theme.badge}`}>
-                          {item.verdict === 'AI_GENERATED' ? 'AI Generated' : 'Authentic'}
+                        <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-semibold border ${
+                          isAI
+                            ? 'bg-rose-50 text-rose-700 border-rose-200 dark:bg-rose-950/60 dark:text-rose-300 dark:border-rose-900/50'
+                            : 'bg-emerald-50 text-emerald-700 border-emerald-200 dark:bg-emerald-950/60 dark:text-emerald-300 dark:border-emerald-900/50'
+                        }`}>
+                          {isAI ? 'AI Generated' : 'Authentic'}
                         </span>
                       </td>
                       <td className="py-3 px-4">
-                        <span className={`font-mono font-medium ${item.deepfakeScore >= 60 ? 'text-rose-600 dark:text-rose-400' : 'text-zinc-600 dark:text-zinc-400'}`}>
+                        <span className={`font-mono font-bold ${item.deepfakeScore >= 60 ? 'text-rose-600 dark:text-rose-400' : 'text-emerald-600 dark:text-emerald-400'}`}>
                           {item.deepfakeScore}%
                         </span>
                       </td>
@@ -163,7 +167,7 @@ export function HistoryTable({ onSelectScan }) {
                             variant="ghost"
                             size="icon"
                             onClick={() => handleDelete(item.scanId)}
-                            className="h-7 w-7 text-zinc-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-950/20"
+                            className="h-7 w-7 text-zinc-400 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-950/20"
                             title="Delete"
                           >
                             <Trash2 className="w-3.5 h-3.5" />

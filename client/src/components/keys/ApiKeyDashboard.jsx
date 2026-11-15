@@ -115,10 +115,10 @@ export function ApiKeyDashboard() {
       {/* Gemini Pool */}
       <Card>
         <CardHeader className="flex flex-row items-center justify-between">
-          <CardTitle className="text-xs">Google Gemini Keys</CardTitle>
-          <span className="text-xs text-zinc-500">{gemini.active} ready</span>
+          <CardTitle className="text-sm font-semibold">Google Gemini Keys</CardTitle>
+          <span className="text-xs text-zinc-500 dark:text-zinc-400 font-medium">{gemini.active} ready</span>
         </CardHeader>
-        <CardContent className="space-y-2.5">
+        <CardContent className="space-y-3">
           {gemini.keys && gemini.keys.length > 0 ? (
             gemini.keys.map((k) => (
               <KeyStatusCard
@@ -129,7 +129,7 @@ export function ApiKeyDashboard() {
               />
             ))
           ) : (
-            <div className="text-center py-6 text-xs text-zinc-500 border border-dashed border-zinc-800 rounded-lg">
+            <div className="text-center py-8 text-xs text-zinc-500 border border-dashed border-zinc-200 dark:border-zinc-800 rounded-xl bg-zinc-50/50 dark:bg-zinc-900/20">
               No Gemini keys found. Click "Add Key" above to register your API key.
             </div>
           )}
@@ -139,10 +139,10 @@ export function ApiKeyDashboard() {
       {/* Hugging Face Pool */}
       <Card>
         <CardHeader className="flex flex-row items-center justify-between">
-          <CardTitle className="text-xs">Hugging Face Tokens</CardTitle>
-          <span className="text-xs text-zinc-500">{hf.active} ready</span>
+          <CardTitle className="text-sm font-semibold">Hugging Face Tokens</CardTitle>
+          <span className="text-xs text-zinc-500 dark:text-zinc-400 font-medium">{hf.active} ready</span>
         </CardHeader>
-        <CardContent className="space-y-2.5">
+        <CardContent className="space-y-3">
           {hf.tokens && hf.tokens.length > 0 ? (
             hf.tokens.map((t) => (
               <KeyStatusCard
@@ -153,7 +153,7 @@ export function ApiKeyDashboard() {
               />
             ))
           ) : (
-            <div className="text-center py-6 text-xs text-zinc-500 border border-dashed border-zinc-800 rounded-lg">
+            <div className="text-center py-8 text-xs text-zinc-500 border border-dashed border-zinc-200 dark:border-zinc-800 rounded-xl bg-zinc-50/50 dark:bg-zinc-900/20">
               No Hugging Face token added.
             </div>
           )}

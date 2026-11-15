@@ -8,36 +8,36 @@ export function KeyStatusCard({ keyItem, provider, onDelete }) {
   const isActive = keyItem.status === 'ACTIVE';
 
   return (
-    <div className="flex items-center justify-between p-3 rounded-lg bg-zinc-50 dark:bg-zinc-900/60 border border-zinc-200 dark:border-zinc-800 text-xs hover:border-zinc-300 dark:hover:border-zinc-700 transition-all">
-      <div className="flex items-center gap-3 min-w-0">
-        <div className="p-1.5 rounded-md bg-zinc-200 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300">
+    <div className="flex items-center justify-between p-3.5 rounded-xl bg-white dark:bg-zinc-900/80 border border-zinc-200/90 dark:border-zinc-800 text-xs shadow-2xs hover:border-zinc-300 dark:hover:border-zinc-700 transition-all">
+      <div className="flex items-center gap-3.5 min-w-0">
+        <div className="p-2 rounded-lg bg-zinc-100 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300">
           <Key className="w-3.5 h-3.5" />
         </div>
 
         <div className="min-w-0">
           <div className="flex items-center gap-2">
-            <span className="font-mono font-medium text-zinc-900 dark:text-zinc-200">{keyItem.masked}</span>
-            <Badge variant="outline" className="text-[10px] py-0 px-1.5 uppercase border-zinc-200 dark:border-zinc-800 text-zinc-500">
+            <span className="font-mono font-semibold text-zinc-900 dark:text-zinc-100">{keyItem.masked}</span>
+            <Badge variant="outline" className="text-[10px] py-0 px-2 uppercase border-zinc-200 dark:border-zinc-800 text-zinc-600 dark:text-zinc-400">
               {keyItem.source}
             </Badge>
           </div>
           <div className="flex items-center gap-2 mt-0.5 text-[11px] text-zinc-500">
-            <span>Requests: <strong className="text-zinc-800 dark:text-zinc-300">{keyItem.requestCount}</strong></span>
+            <span>Requests: <strong className="text-zinc-800 dark:text-zinc-200">{keyItem.requestCount}</strong></span>
           </div>
         </div>
       </div>
 
       <div className="flex items-center gap-2.5">
         {isActive && (
-          <Badge variant="success" className="gap-1">
-            <CheckCircle2 className="w-3 h-3 text-emerald-400" />
+          <Badge variant="success" className="gap-1 font-semibold">
+            <CheckCircle2 className="w-3 h-3 text-emerald-600 dark:text-emerald-400" />
             Active
           </Badge>
         )}
 
         {isRateLimited && (
-          <Badge variant="warning" className="gap-1">
-            <Clock className="w-3 h-3 text-amber-400" />
+          <Badge variant="warning" className="gap-1 font-semibold">
+            <Clock className="w-3 h-3 text-amber-600 dark:text-amber-400" />
             Cooldown ({keyItem.cooldownRemainingSeconds}s)
           </Badge>
         )}
@@ -46,7 +46,7 @@ export function KeyStatusCard({ keyItem, provider, onDelete }) {
           variant="ghost"
           size="icon"
           onClick={() => onDelete(provider, keyItem.id)}
-          className="text-zinc-500 hover:text-rose-400 h-7 w-7"
+          className="text-zinc-400 hover:text-rose-600 dark:text-zinc-500 dark:hover:text-rose-400 h-8 w-8"
           title="Remove key"
         >
           <Trash2 className="w-3.5 h-3.5" />

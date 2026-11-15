@@ -116,14 +116,14 @@ export function AddKeyDialog({ open, onClose, onKeyAdded }) {
 
         {error && <Alert variant="destructive" className="text-xs py-2">{error}</Alert>}
 
-        <div className="flex items-center justify-between pt-3 border-t border-zinc-800">
+        <div className="flex items-center justify-between pt-3 border-t border-zinc-200 dark:border-zinc-800">
           <Button
             type="button"
             variant="ghost"
             size="sm"
             onClick={handleTest}
             disabled={!keyValue.trim() || isTesting || isSubmitting}
-            className="text-xs text-zinc-400 hover:text-zinc-200"
+            className="text-xs text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-200"
           >
             {isTesting ? <RefreshCw className="w-3.5 h-3.5 animate-spin mr-1" /> : null}
             Test Key
